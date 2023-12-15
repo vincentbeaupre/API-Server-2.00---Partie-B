@@ -71,6 +71,7 @@ function attachCmd() {
     $('#renderManageUsersMenuCmd').on('click', renderManageUsers);
     $('#editProfilCmd').on('click', renderEditProfilForm);
     $('#aboutCmd').on("click", renderAbout);
+    $('#newPhotoCmd').on("click", renderCreatePhoto);
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// Header management
@@ -230,6 +231,13 @@ async function createProfil(profil) {
     if (await API.register(profil)) {
         loginMessage = "Votre compte a été créé. Veuillez prendre vos courriels pour réccupérer votre code de vérification qui vous sera demandé lors de votre prochaine connexion."
         renderLoginForm();
+    } else {
+        renderError("Un problème est survenu.");
+    }
+}
+async function createPhoto(photo) {
+    if (await API.CreatePhoto(photo)) {
+        renderPhotos();
     } else {
         renderError("Un problème est survenu.");
     }
@@ -471,6 +479,76 @@ function renderCreateProfil() {
         event.preventDefault();
         showWaitingGif();
         createProfil(profil);
+    });
+}
+function renderCreatePhoto() {
+    
+    let loggedUser = API.retrieveLoggedUser();
+
+    noTimeout();
+    eraseContent();
+    UpdateHeader("Ajout de photo", "createPhoto");
+    $("#newPhotoCmd").hide();
+    $("#content").append(`
+        <br/>
+        <form class="form" id="createPhotoForm"'>
+            <fieldset>
+                <legend>Informations</legend>
+                <input  type="text" 
+                        class="form-control" 
+                        name="Title" 
+                        id="Title"
+                        placeholder="Titre" 
+                        required 
+                        RequireMessage = 'Veuillez entrer un titre'
+                        InvalidMessage = 'Titre invalide'
+                        CustomErrorMessage ="Ce titre est déjà utilisé"/>
+
+                <input  class="form-control" 
+                        type="textarea" 
+                        name="Description" 
+                        id="Description" 
+                        placeholder="Description" 
+                        required
+                        RequireMessage = 'Veuillez entrer une description'
+                        InvalidMessage="Veuillez entrer une description valide" />
+
+                <input  type="checkbox" 
+                        name="Shared" 
+                        id="Shared" />
+
+                <label class="form-check-label" for="Shared">Partagée</label>
+                
+            </fieldset>
+            <fieldset>
+                <legend>Image</legend>
+                <div class='imageUploader' 
+                        newImage='true' 
+                        controlId='Image' 
+                        imageSrc='images/photoCloudLogo.png' 
+                        waitingImage="images/Loading_icon.gif">
+            </div>
+            </fieldset>
+   
+            <input type='submit' name='submit' id='savePhoto' value="Enregistrer" class="form-control btn-primary">
+        </form>
+        <div class="cancel">
+            <button class="form-control btn-secondary" id="abortCreatePhotoCmd">Annuler</button>
+        </div>
+    `);
+    $('#loginCmd').on('click', renderLoginForm);
+    initFormValidation(); // important do to after all html injection!
+    initImageUploaders();
+    $('#abortCreatePhotoCmd').on('click', renderPhotos);
+    $('#createPhotoForm').on("submit", function (event) {
+        let photo = getFormData($('#createPhotoForm'));
+        photo.OwnerId = loggedUser.Id;
+        photo.Shared = $("#Shared").prop("checked");
+        photo.Date = Date.now();
+        photo.Likes = 0;
+        event.preventDefault();
+        showWaitingGif();
+        createPhoto(photo);
     });
 }
 async function renderManageUsers() {

@@ -1,5 +1,6 @@
 import RouteRegister from './routeRegister.js';
 import AccountsController from "./controllers/AccountsController.js";
+import PhotosController from './controllers/PhotosController.js';
 
 export const API_EndPoint = async function (HttpContext) {
     if (!HttpContext.path.isAPI) {
