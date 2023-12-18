@@ -20,8 +20,8 @@
     padding-left: 10px;
 }
 
-
 .photoImage {
+    position: relative;
     display:flex;
     gap:5px;
     background-size: cover;
@@ -33,19 +33,50 @@
     padding: 5px;
 }
 
+.photoImage:hover {
+    cursor: pointer;
+}
+
+.photoOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    cursor: default;
+    margin: 5px;
+}
+.photoAvatarContainer {
+    display: flex;
+    align-items: center;
+}
+.photoAvatarContainer * {
+    margin: 5px;
+}
 .photoTitleContainer {
     height: 40px;
     display:grid;
     grid-template-columns: 308px 25px 25px;
     align-items: center;
-    cursor:default;
 }
-
 
 .photoTitle {
     font-size: 18px;
     font-weight: bold;
     color:rgb(0, 87, 204);
+}
+
+.editIcon, .deleteIcon {
+    font-size: 20px;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    color:rgb(0, 87, 204);
+    cursor: pointer;
+}
+
+.photoLayout:hover .editIcon, 
+.photoLayout:hover .deleteIcon {
+    visibility: visible;
+    opacity: 1;
 }
 
 .photoDetailsOwner {
@@ -69,7 +100,17 @@
     text-align:justify;
 }
 
+.photoInfoContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+
 .photoCreationDate {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     font-size: 0.8em !important;
     color:dodgerblue;
     display:grid;
@@ -78,9 +119,14 @@
 }
 .likesSummary {
     display:grid;
-    grid-template-columns: 60px 30px;
+    grid-template-columns: 30px 20px;
     align-items: center;
     text-align: right;
+    color:rgb(0, 87, 204);
+    margin-right: 20px;
+}
+.likesSummary:hover {
+    cursor: pointer;
 }
 .photoDetailsCreationDate {
     color:dodgerblue;
@@ -89,10 +135,57 @@
     grid-template-columns: auto 95px;
     align-items: center;
 }
-.photoDetailsLargeImage {
-    width:100%;
-    object-fit: cover;
-    padding: 5px;
+.photoDetailContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    margin: auto;
+    max-width: 800px;
 }
+
+.photoDetailsTitle, .photoDetailsDescription, .photoInfoContainer {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.photoDetailsLargeImage {
+    width: 100%;
+    height: 500px;
+    object-fit: contain;
+    background-size: contain;
+    background-position: center center;
+    background-repeat: no-repeat;
+    border: 1px solid rgb(233, 233, 233);
+    border-radius: 9px;
+    box-shadow: 5px 5px 5px rgba(88, 88, 88, 0.342);
+}
+
+@media (max-width: 600px) {
+    .photoDetailContainer {
+        padding: 10px;
+    }
+    .photoDetailsLargeImage {
+        max-height: 300px;
+    }
+}
+
+.confirmDeletePhotoContainer {
+    text-align: center;
+    padding: 20px;
+}
+
+.confirmDeletePhotoContainer .photoDetailsLargeImage {
+    margin-bottom: 10px;
+    background-size: contain;
+    height: 300px;
+}
+
+.confirmDeletePhotoContainer .photoDetailsTitle {
+    margin-bottom: 20px;
+}
+
 
 

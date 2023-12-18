@@ -23,7 +23,7 @@ export default class CachedRequestsManager {
                     if (endpoint.url == url) {
                         // renew cached url
                         endpoint.Expire_Time = utilities.nowInSeconds() + requestCacheExpirationTime;
-                        log(BgGreen, FgWhite, "Response content of request Get: ", url, " retreived from requests cache");
+                        log(BgGreen, FgWhite, "Response content of request Get: ", url, " retrieved from requests cache");
                         return endpoint;
                     }
                 }

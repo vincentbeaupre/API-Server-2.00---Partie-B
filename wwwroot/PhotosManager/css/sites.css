@@ -139,6 +139,10 @@
     margin:20px;
 }
 
+.form .description {
+    height: 200px;
+}
+
 .cancel {
     max-width: 310px;
     margin: auto;
