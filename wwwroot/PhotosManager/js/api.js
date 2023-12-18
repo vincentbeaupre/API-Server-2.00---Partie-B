@@ -3,7 +3,7 @@
 
 ////////////////////////////////////////////// API photos_APIs call ///////////////////////////////////////////////////////
 
-const serverHost = "http://localhost:5000";
+const serverHost = "https://regular-resisted-spike.glitch.me";
 const photos_API = "/api/photos";
 const photoLikes_API = "/api/likes";
 class API {
